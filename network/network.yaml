@@ -16,14 +16,6 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: Network Resources for WSO2 Product Deployment
 Metadata:
   'AWS::CloudFormation::Interface':
-    ParameterGroups:
-      - Label:
-          default: WSO2 Transit Gateway
-        Parameters:
-          - TransitGatewayId
-    ParameterLabels:
-      TransitGatewayId:
-        default: Transit Gateway Id
 Resources:
   # networking configurations
   WSO2VPC:
@@ -123,24 +115,6 @@ Resources:
     Type: 'AWS::EC2::EIP'
     Properties:
       Domain: vpc
-  WSO2TransitGatewayAttachment:
-    Type: "AWS::EC2::TransitGatewayAttachment"
-    Properties:
-      SubnetIds:
-        - !Ref WSO2PrivateSubnet1
-        - !Ref WSO2PrivateSubnet2
-      Tags:
-        - Key: Name
-          Value: WSO2 Transit Gateway
-      TransitGatewayId: !Ref TransitGatewayId
-      VpcId: !Ref WSO2VPC
-  WSO2TransitGatewayRoute:
-    Type: 'AWS::EC2::Route'
-    Properties:
-      RouteTableId: !Ref WSO2PrivateSubnetRouteTable
-      TransitGatewayId: !Ref TransitGatewayId
-      DestinationCidrBlock: 10.0.0.0/16
-    DependsOn: WSO2TransitGatewayAttachment
   WSO2DBSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -304,9 +278,6 @@ Resources:
           FromPort: '5701'
           ToPort: '5701'
           CidrIp: 0.0.0.0/0
-Parameters:
-  TransitGatewayId:
-    Type: String
 Outputs:
   WSO2VPCID:
     Value: !Ref WSO2VPC
