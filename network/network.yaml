@@ -14,8 +14,6 @@
 
 AWSTemplateFormatVersion: 2010-09-09
 Description: Network Resources for WSO2 Product Deployment
-Metadata:
-  'AWS::CloudFormation::Interface':
 Resources:
   # networking configurations
   WSO2VPC:
