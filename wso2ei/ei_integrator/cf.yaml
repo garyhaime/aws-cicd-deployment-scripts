@@ -37,10 +37,6 @@ Metadata:
           default: Environment Configurations
           Parameters:
             - Environment
-      - Label:
-          default: WSO2 Transit Gateway
-        Parameters:
-          - TransitGatewayId
     ParameterLabels:
       IAMRole:
         default: AWS IAM Role
@@ -62,8 +58,6 @@ Metadata:
         default: Version
       Environment:
         default: Environment
-      TransitGatewayId:
-        default: Transit Gateway Id
 Resources:
   WSO2EIMonitoringInstanceIAMRole:
     Type: AWS::IAM::Role
@@ -200,25 +194,6 @@ Resources:
     Type: 'AWS::EC2::EIP'
     Properties:
       Domain: vpc
-  WSO2EIProdTransitGatewayAttachment:
-    Type: "AWS::EC2::TransitGatewayAttachment"
-    Properties:
-      SubnetIds:
-        - !Ref WSO2EIPrivateSubnet1
-        - !Ref WSO2EIPrivateSubnet2
-      Tags:
-        - Key: Name
-          Value: WSO2 Transit Gateway
-      TransitGatewayId: !Ref TransitGatewayId
-      VpcId: !Ref WSO2EIVPC
-  WSO2EIProdTransitGatewayRoute:
-    Type: 'AWS::EC2::Route'
-    Properties:
-      RouteTableId: !Ref WSO2EIPrivateSubnetRouteTable
-      TransitGatewayId: !Ref TransitGatewayId
-      DestinationCidrBlock: 10.0.0.0/16
-    DependsOn: WSO2EIProdTransitGatewayAttachment
-  # EFS configurations
   WSO2EIEFSSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -1118,8 +1093,6 @@ Parameters:
   Version:
     Type: String
   Environment:
-    Type: String
-  TransitGatewayId:
     Type: String
 Mappings:
   WSO2MonitorMasterAMIRegionMap:
