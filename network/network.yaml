@@ -14,6 +14,9 @@
 
 AWSTemplateFormatVersion: 2010-09-09
 Description: Network Resources for WSO2 Product Deployment
+Parameters:
+    VpcId:
+    Type: String
 Resources:
   # networking configurations
   WSO2VPC:
