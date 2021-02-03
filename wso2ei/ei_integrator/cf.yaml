@@ -37,10 +37,6 @@ Metadata:
           default: Environment Configurations
           Parameters:
             - Environment
-      - Label:
-          default: WSO2 Transit Gateway
-        Parameters:
-          - TransitGatewayId
     ParameterLabels:
       IAMRole:
         default: AWS IAM Role
